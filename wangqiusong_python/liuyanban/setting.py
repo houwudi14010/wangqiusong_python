@@ -3,6 +3,7 @@
 # import os
 # import sys
 #
+locals_ip = '218.94.77.147'
 THREAD_NUM = 50  # 线程数
 ISPROXY = False  # 是否使用请求代理
 
@@ -23,8 +24,8 @@ MYSQL_USER_PASS = "mingtai@123"   # 商报服务器数据库
 #
 # REDIS
 # ip:port 多个可写为列表或者逗号隔开 如 ip1:port1,ip2:port2 或 ["ip1:port1", "ip2:port2"]
-REDISDB_IP_PORTS = "localhost:16379"# 服务器地址
-# REDISDB_IP_PORTS = "localhost:6379" # 本地地址
+# REDISDB_IP_PORTS = "localhost:16379"# 服务器地址
+REDISDB_IP_PORTS = f"{locals_ip}:16379" # 本地地址
 REDISDB_USER_PASS = "Lsl!@#$%6789" # 服务器 redis
 # REDISDB_USER_PASS = "mingtai@123" # 本地redis
 REDISDB_DB = 0
