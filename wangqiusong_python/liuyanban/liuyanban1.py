@@ -284,9 +284,9 @@ class Liuyanban1(feapder.Spider):
 @click.option('--p', default=1, help="是否开启代理")
 def mian(t, p, ):
     cfg.ISPROXY = p
-    for i in range(t):
-        spider = Liuyanban1(redis_key='test',)
-        spider.start()
+    # for i in range(t):
+    spider = Liuyanban1(redis_key='test',)
+    spider.start()
 
 
 if __name__ == "__main__":

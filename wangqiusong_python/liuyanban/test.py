@@ -11,18 +11,10 @@ headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.0.0 Safari/537.36"
 }
 cookies = {
-    "wdcid": "4b7214ea9b5227c6",
-    "sso_c": "0",
-    "sfr": "1",
-    "__jsluid_h": "40a0e62458ebfb88538253734377a0dc",
-    "4de1d0bdb25d4625be2481a1b9e1350f": "WyIyMDQ3MDc5Nzk3Il0",
-    "wdlast": "1665999637",
-    "wdses": "52d158f4dff7e138",
-    "language": "zh-CN"
+
 }
 url = "http://liuyan.people.com.cn/threads/content"
 params = {
-    "tid": "16257410"
 }
 response = requests.get(url, headers=headers, cookies=cookies, params=params, verify=False)
 
