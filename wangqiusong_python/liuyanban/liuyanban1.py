@@ -285,7 +285,7 @@ class Liuyanban1(feapder.Spider):
 def mian(t, p, ):
     cfg.ISPROXY = p
     # for i in range(t):
-    spider = Liuyanban1(redis_key='test',)
+    spider = Liuyanban1(redis_key='wqs_liuyan',)
     spider.start()
 
 
