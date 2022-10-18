@@ -201,7 +201,7 @@ class people_liuyanban(feapder.Spider):
                   '1459',
                   '1460',
                   '1461', '1462', '1463', '1464', '600', '601']
-        # fidArr = [539]
+        fidArr = [539]
         for fids in fidArr:
             for nums in arr:
                 type = 2
@@ -279,7 +279,7 @@ class people_liuyanban(feapder.Spider):
         return request
 
 
-@click.command(name='mian')
+# @click.command(name='mian')
 # @click.option('--t', default=cfg.THREAD_NUM, help="num 线程数")
 # @click.option('--p', default=1, help="是否开启代理")
 def mian():
@@ -292,3 +292,4 @@ def mian():
 if __name__ == "__main__":
     while True:
         mian()
+        print()
