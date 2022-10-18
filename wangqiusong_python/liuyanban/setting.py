@@ -85,7 +85,7 @@ REDISDB_SERVICE_NAME = ""
 # # request防丢机制。（指定的REQUEST_LOST_TIMEOUT时间内request还没做完，会重新下发 重做）
 # REQUEST_LOST_TIMEOUT = 600  # 10分钟
 # # request网络请求超时时间
-REQUEST_TIMEOUT = 10  # 等待服务器响应的超时时间，浮点数，或(connect timeout, read timeout)元组
+# REQUEST_TIMEOUT = 10  # 等待服务器响应的超时时间，浮点数，或(connect timeout, read timeout)元组
 # # item在内存队列中最大缓存数量
 # ITEM_MAX_CACHED_COUNT = 5000
 # # item每批入库的最大数量
@@ -105,13 +105,13 @@ REQUEST_TIMEOUT = 10  # 等待服务器响应的超时时间，浮点数，或(c
 # PROXY_ENABLE = True
 #
 # # 随机headers
-RANDOM_HEADERS = True
+# RANDOM_HEADERS = True
 # # UserAgent类型 支持 'chrome', 'opera', 'firefox', 'internetexplorer', 'safari'，'mobile' 若不指定则随机类型
 # USER_AGENT_TYPE = "chrome"
 # # 默认使用的浏览器头
 # DEFAULT_USERAGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36"
 # # requests 使用session
-USE_SESSION = True
+# USE_SESSION = True
 #
 # 去重
 ITEM_FILTER_ENABLE = True  # item 去重

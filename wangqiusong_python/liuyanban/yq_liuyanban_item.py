@@ -28,4 +28,4 @@ class YqLiuyanbanItem(Item):
         self.site = None  # 信源名
         self.site_id = None  # 信源id
         self.aid = None  # 唯一id
-        # self.push_state = 0  # 推送状态
+        self.push_state = 0  # 推送状态

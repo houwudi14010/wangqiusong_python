@@ -24,7 +24,7 @@ sys.path.append(rootPath)
 from liuyanban import yq_liuyanban_item
 
 
-class Liuyanban1(feapder.Spider):
+class people_liuyanban(feapder.Spider):
     db = MysqlDB()
     headerss = {
         "Accept": "application/json, text/plain, */*",
@@ -267,7 +267,7 @@ class Liuyanban1(feapder.Spider):
             :param request:
             :return:
             """
-        request.headers = headers = {
+        request.headers  = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36",
             "Referer": "http://liuyan.people.com.cn/threads/list?fid=5050&position=1",
         }
@@ -280,13 +280,13 @@ class Liuyanban1(feapder.Spider):
 
 
 @click.command(name='mian')
-@click.option('--t', default=cfg.THREAD_NUM, help="num 线程数")
-@click.option('--p', default=1, help="是否开启代理")
-def mian(t, p, ):
+# @click.option('--t', default=cfg.THREAD_NUM, help="num 线程数")
+# @click.option('--p', default=1, help="是否开启代理")
+def mian():
     while True:
-        cfg.ISPROXY = p
+        # cfg.ISPROXY = p
         # for i in range(t):
-        spider = Liuyanban1(redis_key='wqs_liuyan',)
+        spider = people_liuyanban(redis_key='wqs_liuyan',)
         spider.start()
 
 
