@@ -24,13 +24,19 @@ MYSQL_USER_PASS = "mingtai@123"   # 商报服务器数据库
 #
 # REDIS
 # ip:port 多个可写为列表或者逗号隔开 如 ip1:port1,ip2:port2 或 ["ip1:port1", "ip2:port2"]
-# REDISDB_IP_PORTS = "localhost:16379"# 服务器地址
-REDISDB_IP_PORTS = f"{locals_ip}:16379" # 本地地址
-REDISDB_USER_PASS = "Lsl!@#$%6789" # 服务器 redis
-# REDISDB_USER_PASS = "mingtai@123" # 本地redis
+REDISDB_IP_PORTS = "localhost:6379"# 服务器地址
+REDISDB_USER_PASS = "mingtai@123" # 本地redis
 REDISDB_DB = 0
 # 适用于redis哨兵模式
 REDISDB_SERVICE_NAME = ""
+
+
+
+
+
+
+
+
 
 # # 数据入库的pipeline，可自定义，默认MysqlPipeline
 # ITEM_PIPELINES = [
@@ -79,7 +85,7 @@ REDISDB_SERVICE_NAME = ""
 # # request防丢机制。（指定的REQUEST_LOST_TIMEOUT时间内request还没做完，会重新下发 重做）
 # REQUEST_LOST_TIMEOUT = 600  # 10分钟
 # # request网络请求超时时间
-# REQUEST_TIMEOUT = 22  # 等待服务器响应的超时时间，浮点数，或(connect timeout, read timeout)元组
+REQUEST_TIMEOUT = 10  # 等待服务器响应的超时时间，浮点数，或(connect timeout, read timeout)元组
 # # item在内存队列中最大缓存数量
 # ITEM_MAX_CACHED_COUNT = 5000
 # # item每批入库的最大数量
@@ -99,13 +105,13 @@ REDISDB_SERVICE_NAME = ""
 # PROXY_ENABLE = True
 #
 # # 随机headers
-# RANDOM_HEADERS = True
+RANDOM_HEADERS = True
 # # UserAgent类型 支持 'chrome', 'opera', 'firefox', 'internetexplorer', 'safari'，'mobile' 若不指定则随机类型
 # USER_AGENT_TYPE = "chrome"
 # # 默认使用的浏览器头
 # DEFAULT_USERAGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36"
 # # requests 使用session
-# USE_SESSION = False
+USE_SESSION = True
 #
 # 去重
 ITEM_FILTER_ENABLE = True  # item 去重
