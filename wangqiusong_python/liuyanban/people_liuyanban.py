@@ -283,12 +283,12 @@ class people_liuyanban(feapder.Spider):
 # @click.option('--t', default=cfg.THREAD_NUM, help="num 线程数")
 # @click.option('--p', default=1, help="是否开启代理")
 def mian():
-    while True:
-        # cfg.ISPROXY = p
-        # for i in range(t):
-        spider = people_liuyanban(redis_key='wqs_liuyan',)
-        spider.start()
+    # cfg.ISPROXY = p
+    # for i in range(t):
+    spider = people_liuyanban(redis_key='wqs_liuyan',)
+    spider.start()
 
 
 if __name__ == "__main__":
-    mian()
+    while True:
+        mian()
