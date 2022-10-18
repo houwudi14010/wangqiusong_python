@@ -8,8 +8,9 @@ THREAD_NUM = 50  # 线程数
 ISPROXY = False  # 是否使用请求代理
 
 # # MYSQL
-MYSQL_IP = "103.85.168.100"
-MYSQL_PORT = 53306
+MYSQL_IP = "localhost"
+MYSQL_PORT = 3306
+# MYSQL_PORT = 53306
 MYSQL_DB = "mysql"
 MYSQL_USER_NAME = "root"
 # MYSQL_USER_PASS = "root"    # 本地数据库
