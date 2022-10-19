@@ -11,3 +11,5 @@ F
 yiche/target_spider.py,e\a\eaba4f40c159facfbbf10da4221b979865cc7695
 Y
 )wangyi/article_list_tieba_article_item.py,1\8\18f60e51e56d9e023a1bc2da87b8ee3139c387f7
+A
+items/__init__.py,5\b\5bce1284da52c82964845013c425ba16cb5ecee5
