@@ -229,8 +229,8 @@ class people_liuyanban(feapder.Spider):
         return self.datass
 
     def parse(self, request, response):
-            if response.status_code != 200:
-                raise Exception("非法页面")
+            # if response.status_code != 200:
+            #     raise Exception("非法页面")
             tid = re.compile('"tid":(.*?),').findall(response.text)
             for tids in tid:
                 time.sleep(1)
