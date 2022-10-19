@@ -46,6 +46,24 @@ class people_liuyanban(feapder.Spider):
 
     }
 
+    def signature(self, tids, type, nums):
+        if type == 1:
+            self.datass['param'] = "{\"tid\":\"" + str(tids) + "\",\"fromTrash\":0}"
+            pwds = "/v1/threads/content{\"tid\":\"" + str(tids) + "\",\"fromTrash\":0}"
+        elif type == 3:
+            self.datass['param'] = "{\"fid\":\"" + str(tids) + "\",\"showUnAnswer\":1,\"typeId\":5,\"lastItem\":\"\",\"position\":\"1\",\"rows\":10,\"orderType\":2}"
+            pwds = "/v1/threads/list/bw{\"fid\":\"" + str(tids) + "\",\"showUnAnswer\":1,\"typeId\":5,\"lastItem\":\"\",\"position\":\"1\",\"rows\":10,\"orderType\":2}"
+        else:
+            self.datass['param'] = "{\"fid\":\"" + str(tids) + "\",\"showUnAnswer\":1,\"typeId\":" + str(
+                nums) + ",\"lastItem\":\"\",\"position\":\"0\",\"rows\":10,\"orderType\":2}"
+            pwds = "/v1/threads/list/df{\"fid\":\"" + str(tids) + "\",\"showUnAnswer\":1,\"typeId\":" + str(
+                nums) + ",\"lastItem\":\"\",\"position\":\"0\",\"rows\":10,\"orderType\":2}"
+        pwd = self.datass['appCode']
+        pwd = hashlib.md5(bytes(pwd, encoding='utf-8'))
+        pwdss = pwds + pwd.hexdigest()[0:16]
+        self.datass['signature'] = hashlib.md5(bytes(pwdss, encoding='utf-8')).hexdigest()
+        return self.datass
+
     def start_requests(self, ):
         arr = [1, 2, 5]
         fidArr = ['5050', '5051', '5052', '5054', '5055', '5056', '5057', '5058', '5059', '5060', '5061', '5062',
@@ -202,64 +220,56 @@ class people_liuyanban(feapder.Spider):
                   '1459',
                   '1460',
                   '1461', '1462', '1463', '1464', '600', '601']
-        fidArr = [5050]
+        # fidArr = [5051]
         for fids in fidArr:
             for nums in arr:
                 type = 2
                 signatures = self.signature(fids, type, nums)
                 dataa = json.dumps(signatures)
                 url = "http://liuyan.people.com.cn/v1/threads/list/df"
-                yield feapder.Request(url, timeout=30, data=dataa, allow_redirects=False, download_midware=self.download_midware,)
+                # yield feapder.Request(url, timeout=30, data=dataa, allow_redirects=False, download_midware=self.download_midware,)
+                yield feapder.Request(url, timeout=30, data=dataa, allow_redirects=False, meta=fids,)
 
-    def signature(self, tids, type, nums):
-        if type == 1:
-            self.datass['param'] = "{\"tid\":\"" + str(tids) + "\",\"fromTrash\":0}"
-            pwds = "/v1/threads/content{\"tid\":\"" + str(tids) + "\",\"fromTrash\":0}"
-        else:
-            self.datass['param'] = "{\"fid\":\"" + str(tids) + "\",\"showUnAnswer\":1,\"typeId\":" + str(
-                nums) + ",\"lastItem\":\"\",\"position\":\"0\",\"rows\":10,\"orderType\":2}"
-            pwds = "/v1/threads/list/df{\"fid\":\"" + str(tids) + "\",\"showUnAnswer\":1,\"typeId\":" + str(
-                nums) + ",\"lastItem\":\"\",\"position\":\"0\",\"rows\":10,\"orderType\":2}"
-        pwd = self.datass['appCode']
-        pwd = hashlib.md5(bytes(pwd, encoding='utf-8'))
-        pwdss = pwds + pwd.hexdigest()[0:16]
-        self.datass['signature'] = hashlib.md5(bytes(pwdss, encoding='utf-8')).hexdigest()
-        return self.datass
-
-    def parse(self, request, response):
-            if response.status_code != 200:
-                raise Exception("非法页面")
+    def parse(self, request, response,):
+        tid = re.compile('"tid":(.*?),').findall(response.text)
+        if response.status_code != 200 or tid == []:
+            type = 3
+            url = "https://liuyan.people.com.cn/v1/threads/list/bw"
+            print(request.meta)
+            signatures = self.signature(request.meta, type, 5)
+            dataa = json.dumps(signatures)
+            yield feapder.Request(url, timeout=30, data=dataa, allow_redirects=False, )
             tid = re.compile('"tid":(.*?),').findall(response.text)
-            for tids in tid:
-                time.sleep(1)
-                urls = "http://liuyan.people.com.cn/v1/threads/content"
-                type = 1
-                num = 2
-                signatures = self.signature(tids, type, num)
-                dataa = json.dumps(signatures)
-                res = requests.post(urls, headers=self.headerss, data=dataa, timeout=30, verify=False)
-                title = re.compile('"subject":"(.*?)",').findall(res.content.decode('utf-8'))
-                content = re.compile('"content":"([\s\S]*?)",').findall(res.content.decode('utf-8'))
-                pubtime = re.compile('"createDateline":([\s\S]*?),').findall(res.content.decode('utf-8'))
-                time_tuple_1 = time.localtime(int(pubtime[0]))
-                bj_time = time.strftime("%Y-%m-%d %H:%M:%S", time_tuple_1)
-                downloadTime = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-                pubTimes = datetime.datetime.strptime(bj_time, "%Y-%m-%d %H:%M:%S")
-                downloadTimes = datetime.datetime.strptime(downloadTime, "%Y-%m-%d %H:%M:%S")
-                site = "领导留言板"
-                siteId = 1047953
-                articleStatue = 0
-                item = yq_liuyanban_item.YqLiuyanbanItem()  # 声明一个item
-                item.url = "https://liuyan.people.com.cn/threads/content?tid=" + tids  # 给item属性赋值
-                item.title = title[0]  # 给item属性赋值
-                item.pub_time = pubTimes  # 给item属性赋值
-                item.content = content[0]  # 给item属性赋值
-                item.download_time = downloadTimes  # 给item属性赋值
-                item.site = site  # 给item属性赋值
-                item.site_id = siteId  # 给item属性赋值
-                item.aid = tids  # 给item属性赋值
-                item.push_state = articleStatue  # 给item属性赋值
-                yield item
+
+        for tids in tid:
+            urls = "http://liuyan.people.com.cn/v1/threads/content"
+            type = 1
+            num = 2
+            signatures = self.signature(tids, type, num)
+            dataa = json.dumps(signatures)
+            res = requests.post(urls, headers=self.headerss, data=dataa, timeout=30, verify=False)
+            title = re.compile('"subject":"(.*?)",').findall(res.content.decode('utf-8'))
+            content = re.compile('"content":"([\s\S]*?)",').findall(res.content.decode('utf-8'))
+            pubtime = re.compile('"createDateline":([\s\S]*?),').findall(res.content.decode('utf-8'))
+            time_tuple_1 = time.localtime(int(pubtime[0]))
+            bj_time = time.strftime("%Y-%m-%d %H:%M:%S", time_tuple_1)
+            downloadTime = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            pubTimes = datetime.datetime.strptime(bj_time, "%Y-%m-%d %H:%M:%S")
+            downloadTimes = datetime.datetime.strptime(downloadTime, "%Y-%m-%d %H:%M:%S")
+            site = "领导留言板"
+            siteId = 1047953
+            articleStatue = 0
+            item = yq_liuyanban_item.YqLiuyanbanItem()  # 声明一个item
+            item.url = "https://liuyan.people.com.cn/threads/content?tid=" + tids  # 给item属性赋值
+            item.title = title[0]  # 给item属性赋值
+            item.pub_time = pubTimes  # 给item属性赋值
+            item.content = content[0]  # 给item属性赋值
+            item.download_time = downloadTimes  # 给item属性赋值
+            item.site = site  # 给item属性赋值
+            item.site_id = siteId  # 给item属性赋值
+            item.aid = tids  # 给item属性赋值
+            item.push_state = articleStatue  # 给item属性赋值
+            yield item
 
     def download_midware(self, request):
         """
@@ -267,7 +277,7 @@ class people_liuyanban(feapder.Spider):
             :param request:
             :return:
             """
-        request.headers  = {
+        request.headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36",
             "Referer": "http://liuyan.people.com.cn/threads/list?fid=5050&position=1",
         }
@@ -282,8 +292,9 @@ class people_liuyanban(feapder.Spider):
 def mian():
     a = 0
     while True:
-        a +=1
-        print("第"+str(a)+"执行")
+        a += 1
+        print("第" + str(a) + "执行")
+        # spider = people_liuyanban(redis_key='wqs', )
         spider = people_liuyanban(redis_key='wqs', thread_count=10)
         spider.start()
         spider.join()

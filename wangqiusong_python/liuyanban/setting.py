@@ -54,7 +54,7 @@ REDISDB_SERVICE_NAME = ""
 # SPIDER_THREAD_COUNT = 32  # 爬虫并发数
 # # 下载时间间隔 单位秒。 支持随机 如 SPIDER_SLEEP_TIME = [2, 5] 则间隔为 2~5秒之间的随机数，包含2和5
 # SPIDER_SLEEP_TIME = 0
-SPIDER_MAX_RETRY_TIMES = 10  # 每个请求最大重试次数
+SPIDER_MAX_RETRY_TIMES = 30  # 每个请求最大重试次数
 # KEEP_ALIVE = False  # 爬虫是否常驻
 
 # # 浏览器渲染
