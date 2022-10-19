@@ -24,12 +24,11 @@ MYSQL_USER_PASS = "mingtai@123"   # 商报服务器数据库
 #
 # REDIS
 # ip:port 多个可写为列表或者逗号隔开 如 ip1:port1,ip2:port2 或 ["ip1:port1", "ip2:port2"]
-REDISDB_IP_PORTS = "192.168.1.26:16379"# 服务器地址
-REDISDB_USER_PASS = "mingtai@123" # 本地redis
+# REDISDB_IP_PORTS = "127.0.0.1:6379"# 本地地址
+REDISDB_IP_PORTS = '192.168.1.26:16379'# 服务器地址
+# REDISDB_USER_PASS = "mingtai@123" # 本地redis
 REDISDB_USER_PASS = "Lsl!@#$%6789" # 本地redis
-REDISDB_DB = 1
-RANDOM_HEADERS = False
-USE_SESSION = True
+REDISDB_DB = 0
 # 适用于redis哨兵模式
 REDISDB_SERVICE_NAME = ""
 
@@ -57,7 +56,7 @@ REDISDB_SERVICE_NAME = ""
 # SPIDER_THREAD_COUNT = 32  # 爬虫并发数
 # # 下载时间间隔 单位秒。 支持随机 如 SPIDER_SLEEP_TIME = [2, 5] 则间隔为 2~5秒之间的随机数，包含2和5
 # SPIDER_SLEEP_TIME = 0
-# SPIDER_MAX_RETRY_TIMES = 10  # 每个请求最大重试次数
+SPIDER_MAX_RETRY_TIMES = 10  # 每个请求最大重试次数
 # KEEP_ALIVE = False  # 爬虫是否常驻
 
 # # 浏览器渲染
@@ -81,12 +80,12 @@ REDISDB_SERVICE_NAME = ""
 #     use_stealth_js=True,  # 使用stealth.min.js隐藏浏览器特征
 # )
 #
-# # 爬虫启动时，重新抓取失败的requests
-# RETRY_FAILED_REQUESTS = False
-# # 保存失败的request
-# SAVE_FAILED_REQUEST = True
-# # request防丢机制。（指定的REQUEST_LOST_TIMEOUT时间内request还没做完，会重新下发 重做）
-# REQUEST_LOST_TIMEOUT = 600  # 10分钟
+# 爬虫启动时，重新抓取失败的requests
+RETRY_FAILED_REQUESTS = True
+# 保存失败的request
+SAVE_FAILED_REQUEST = True
+# request防丢机制。（指定的REQUEST_LOST_TIMEOUT时间内request还没做完，会重新下发 重做）
+REQUEST_LOST_TIMEOUT = 600  # 10分钟
 # # request网络请求超时时间
 # REQUEST_TIMEOUT = 10  # 等待服务器响应的超时时间，浮点数，或(connect timeout, read timeout)元组
 # # item在内存队列中最大缓存数量
@@ -114,7 +113,7 @@ REDISDB_SERVICE_NAME = ""
 # # 默认使用的浏览器头
 # DEFAULT_USERAGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36"
 # # requests 使用session
-# USE_SESSION = True
+USE_SESSION = True
 #
 # 去重
 ITEM_FILTER_ENABLE = True  # item 去重
