@@ -3,8 +3,6 @@
 # import os
 # import sys
 #
-THREAD_NUM = 50  # 线程数
-ISPROXY = True  # 是否使用请求代理
 
 # # MYSQL
 MYSQL_IP = "103.85.168.100"
@@ -152,7 +150,7 @@ REQUEST_FILTER_SETTING = dict(
 #
 # LOG_NAME = os.path.basename(os.getcwd())
 # LOG_PATH = "log/%s.log" % LOG_NAME  # log存储路径
-# LOG_LEVEL = "DEBUG"
+LOG_LEVEL = "INFO"
 # LOG_COLOR = True  # 是否带有颜色
 # LOG_IS_WRITE_TO_CONSOLE = True  # 是否打印到控制台
 # LOG_IS_WRITE_TO_FILE = False  # 是否写文件
