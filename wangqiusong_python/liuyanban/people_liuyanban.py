@@ -202,7 +202,7 @@ class people_liuyanban(feapder.Spider):
                   '1459',
                   '1460',
                   '1461', '1462', '1463', '1464', '600', '601']
-        # fidArr = [539]
+        fidArr = [5050]
         for fids in fidArr:
             for nums in arr:
                 type = 2
@@ -280,7 +280,10 @@ class people_liuyanban(feapder.Spider):
 
 
 def mian():
+    a = 0
     while True:
+        a +=1
+        print("第"+str(a)+"执行")
         spider = people_liuyanban(redis_key='wqs', thread_count=10)
         spider.start()
         spider.join()
