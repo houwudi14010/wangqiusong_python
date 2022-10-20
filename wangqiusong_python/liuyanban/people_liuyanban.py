@@ -237,10 +237,9 @@ class people_liuyanban(feapder.Spider):
             if response.status_code != 200 or tid == []:
                 type = 3
                 url = "https://liuyan.people.com.cn/v1/threads/list/bw"
-                print(request.meta)
                 signatures = self.signature(request.meta, type, 5)
                 dataa = json.dumps(signatures)
-                yield feapder.Request(url, timeout=30, data=dataa, allow_redirects=False, )
+                yield feapder.Request(url, timeout=30, data=dataa, allow_redirects=False,)
                 tid = re.compile('"tid":(.*?),').findall(response.text)
 
             for tids in tid:
@@ -301,8 +300,8 @@ def mian():
     while True:
         a += 1
         print("第" + str(a) + "执行")
-        # spider = people_liuyanban(redis_key='wqs', )
-        spider = people_liuyanban(redis_key='wqs', thread_count=20)
+        spider = people_liuyanban(redis_key='wqs', )
+        # spider = people_liuyanban(redis_key='wqs', thread_count=20)
         spider.start()
         spider.join()
 
