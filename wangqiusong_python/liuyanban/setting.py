@@ -22,10 +22,10 @@ MYSQL_USER_PASS = "mingtai@123"   # 商报服务器数据库
 #
 # REDIS
 # ip:port 多个可写为列表或者逗号隔开 如 ip1:port1,ip2:port2 或 ["ip1:port1", "ip2:port2"]
-REDISDB_IP_PORTS = "127.0.0.1:6379"# 本地地址
-# REDISDB_IP_PORTS = '192.168.1.26:16379'# 服务器地址
-REDISDB_USER_PASS = "mingtai@123" # 本地redis
-# REDISDB_USER_PASS = "Lsl!@#$%6789" # 本地redis
+# REDISDB_IP_PORTS = "127.0.0.1:6379"# 本地地址
+REDISDB_IP_PORTS = '192.168.1.26:16379'# 服务器地址
+# REDISDB_USER_PASS = "mingtai@123" # 本地redis
+REDISDB_USER_PASS = "Lsl!@#$%6789" # 本地redis
 REDISDB_DB = 0
 # 适用于redis哨兵模式
 REDISDB_SERVICE_NAME = ""
