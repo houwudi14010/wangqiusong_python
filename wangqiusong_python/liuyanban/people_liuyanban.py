@@ -227,7 +227,7 @@ class people_liuyanban(feapder.Spider):
                 signatures = self.signature(fids, type, nums)
                 dataa = json.dumps(signatures)
                 url = "http://liuyan.people.com.cn/v1/threads/list/df"
-                yield feapder.Request(url, timeout=30, data=dataa, allow_redirects=False, download_midware=self.download_midware,)
+                yield feapder.Request(url, timeout=30, data=dataa, allow_redirects=False, download_midware=self.download_midware, meta=fids,)
                 # yield feapder.Request(url, timeout=30, data=dataa, allow_redirects=False, meta=fids,)
 
     def parse(self, request, response,):
