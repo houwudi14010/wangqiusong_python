@@ -223,6 +223,7 @@ class people_liuyanban(feapder.Spider):
         # fidArr = [5051]
         for fids in fidArr:
             for nums in arr:
+                print(fids)
                 type = 2
                 signatures = self.signature(fids, type, nums)
                 dataa = json.dumps(signatures)
