@@ -301,8 +301,8 @@ def mian():
     while True:
         a += 1
         print("第" + str(a) + "执行")
-        spider = people_liuyanban(redis_key='wqs', )
-        # spider = people_liuyanban(redis_key='wqs', thread_count=20)
+        # spider = people_liuyanban(redis_key='wqs', )
+        spider = people_liuyanban(redis_key='wqs', thread_count=20)
         spider.start()
         spider.join()
 
