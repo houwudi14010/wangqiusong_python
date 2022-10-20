@@ -227,49 +227,55 @@ class people_liuyanban(feapder.Spider):
                 signatures = self.signature(fids, type, nums)
                 dataa = json.dumps(signatures)
                 url = "http://liuyan.people.com.cn/v1/threads/list/df"
-                # yield feapder.Request(url, timeout=30, data=dataa, allow_redirects=False, download_midware=self.download_midware,)
-                yield feapder.Request(url, timeout=30, data=dataa, allow_redirects=False, meta=fids,)
+                yield feapder.Request(url, timeout=30, data=dataa, allow_redirects=False, download_midware=self.download_midware,)
+                # yield feapder.Request(url, timeout=30, data=dataa, allow_redirects=False, meta=fids,)
 
     def parse(self, request, response,):
         tid = re.compile('"tid":(.*?),').findall(response.text)
-        if response.status_code != 200 or tid == []:
-            type = 3
-            url = "https://liuyan.people.com.cn/v1/threads/list/bw"
-            print(request.meta)
-            signatures = self.signature(request.meta, type, 5)
-            dataa = json.dumps(signatures)
-            yield feapder.Request(url, timeout=30, data=dataa, allow_redirects=False, )
-            tid = re.compile('"tid":(.*?),').findall(response.text)
+        try:
 
-        for tids in tid:
-            urls = "http://liuyan.people.com.cn/v1/threads/content"
-            type = 1
-            num = 2
-            signatures = self.signature(tids, type, num)
-            dataa = json.dumps(signatures)
-            res = requests.post(urls, headers=self.headerss, data=dataa, timeout=30, verify=False)
-            title = re.compile('"subject":"(.*?)",').findall(res.content.decode('utf-8'))
-            content = re.compile('"content":"([\s\S]*?)",').findall(res.content.decode('utf-8'))
-            pubtime = re.compile('"createDateline":([\s\S]*?),').findall(res.content.decode('utf-8'))
-            time_tuple_1 = time.localtime(int(pubtime[0]))
-            bj_time = time.strftime("%Y-%m-%d %H:%M:%S", time_tuple_1)
-            downloadTime = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-            pubTimes = datetime.datetime.strptime(bj_time, "%Y-%m-%d %H:%M:%S")
-            downloadTimes = datetime.datetime.strptime(downloadTime, "%Y-%m-%d %H:%M:%S")
-            site = "领导留言板"
-            siteId = 1047953
-            articleStatue = 0
-            item = yq_liuyanban_item.YqLiuyanbanItem()  # 声明一个item
-            item.url = "https://liuyan.people.com.cn/threads/content?tid=" + tids  # 给item属性赋值
-            item.title = title[0]  # 给item属性赋值
-            item.pub_time = pubTimes  # 给item属性赋值
-            item.content = content[0]  # 给item属性赋值
-            item.download_time = downloadTimes  # 给item属性赋值
-            item.site = site  # 给item属性赋值
-            item.site_id = siteId  # 给item属性赋值
-            item.aid = tids  # 给item属性赋值
-            item.push_state = articleStatue  # 给item属性赋值
-            yield item
+            if response.status_code != 200 or tid == []:
+                type = 3
+                url = "https://liuyan.people.com.cn/v1/threads/list/bw"
+                print(request.meta)
+                signatures = self.signature(request.meta, type, 5)
+                dataa = json.dumps(signatures)
+                yield feapder.Request(url, timeout=30, data=dataa, allow_redirects=False, )
+                tid = re.compile('"tid":(.*?),').findall(response.text)
+
+            for tids in tid:
+                urls = "http://liuyan.people.com.cn/v1/threads/content"
+                type = 1
+                num = 2
+                signatures = self.signature(tids, type, num)
+                dataa = json.dumps(signatures)
+                res = requests.post(urls, headers=self.headerss, data=dataa, timeout=30, verify=False)
+                title = re.compile('"subject":"(.*?)",').findall(res.content.decode('utf-8'))
+                content = re.compile('"content":"([\s\S]*?)",').findall(res.content.decode('utf-8'))
+                pubtime = re.compile('"createDateline":([\s\S]*?),').findall(res.content.decode('utf-8'))
+                time_tuple_1 = time.localtime(int(pubtime[0]))
+                bj_time = time.strftime("%Y-%m-%d %H:%M:%S", time_tuple_1)
+                downloadTime = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                pubTimes = datetime.datetime.strptime(bj_time, "%Y-%m-%d %H:%M:%S")
+                downloadTimes = datetime.datetime.strptime(downloadTime, "%Y-%m-%d %H:%M:%S")
+                site = "领导留言板"
+                siteId = 1047953
+                articleStatue = 0
+                item = yq_liuyanban_item.YqLiuyanbanItem()  # 声明一个item
+                item.url = "https://liuyan.people.com.cn/threads/content?tid=" + tids  # 给item属性赋值
+                item.title = title[0]  # 给item属性赋值
+                item.pub_time = pubTimes  # 给item属性赋值
+                item.content = content[0]  # 给item属性赋值
+                item.download_time = downloadTimes  # 给item属性赋值
+                item.site = site  # 给item属性赋值
+                item.site_id = siteId  # 给item属性赋值
+                item.aid = tids  # 给item属性赋值
+                item.push_state = articleStatue  # 给item属性赋值
+                yield item
+        except Exception as err:
+            import traceback
+            traceback.print_exc()
+            pass
 
     def download_midware(self, request):
         """
@@ -283,6 +289,7 @@ class people_liuyanban(feapder.Spider):
         }
         try:
             ip = requests.get(f"http://192.168.1.26:16666/get/", timeout=3).json().get("proxy")
+            print(ip)
             request.proxies = {"http": ip, "https": ip}
         except:
             pass
@@ -295,7 +302,7 @@ def mian():
         a += 1
         print("第" + str(a) + "执行")
         # spider = people_liuyanban(redis_key='wqs', )
-        spider = people_liuyanban(redis_key='wqs', thread_count=10)
+        spider = people_liuyanban(redis_key='wqs', thread_count=20)
         spider.start()
         spider.join()
 
