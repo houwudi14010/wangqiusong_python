@@ -15,7 +15,7 @@ from pprint import pformat
 import hashlib
 from retry import retry
 import pymysql
-from utils.mylog import log
+from my_utils.mylog import log
 import requests
 
 # 全局取消ssl证书验证
